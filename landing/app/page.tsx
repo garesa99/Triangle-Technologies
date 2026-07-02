@@ -33,11 +33,8 @@ export default function Home() {
           </div>
           <div className="hero-grid-lines" aria-hidden="true" />
           <div className="hero-content">
-            <Reveal>
-              <span className="eyebrow">Passive · Distributed · Attritable</span>
-            </Reveal>
             <Reveal delay={100}>
-              <h1 className="display" style={{ marginTop: 28, maxWidth: '16ch' }}>
+              <h1 className="display" style={{ maxWidth: '16ch' }}>
                 Detect drones that don&rsquo;t want to be seen.
               </h1>
             </Reveal>

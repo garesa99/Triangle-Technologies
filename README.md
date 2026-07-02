@@ -1,10 +1,10 @@
 # Triangle Mesh
 
-Software for a mesh of low-cost, self-built passive sensor nodes — assembled from commercially available components — that detect **uncooperative** drones
-— drones that do not broadcast their position — by signatures they cannot suppress (propeller
-**sound**, control/video **RF**), use the **absence** of a Remote ID broadcast as a friend-or-foe
-filter, fuse detections across nodes, and localize to an **honestly-labeled** tier. Many low-cost
-bearings → one confident fix. Triangle.
+Software for a mesh of low-cost, self-built passive sensor nodes, assembled from commercially
+available parts, that detect **uncooperative** drones (drones that do not broadcast their position)
+by signatures they cannot suppress: propeller **sound** and control/video **RF**. It uses the
+**absence** of a Remote ID broadcast as a friend-or-foe filter, fuses detections across nodes, and
+localizes to an **honestly labeled** tier. Many low-cost bearings, one confident fix. Triangle.
 
 > Non-negotiable: **real signals only.** No synthetic drones or fake tracks ever reach the live
 > picture. Test fixtures live in `tests/` and never feed the UI. Every detection carries which
@@ -13,14 +13,12 @@ bearings → one confident fix. Triangle.
 ## Layout
 | dir | what |
 |---|---|
+| `app/` `components/` `lib/` `public/` | **the public website (Next.js, at the repo root).** Marketing page at `/`, operator console at `/console`. The console runs a self-contained browser **demo** (no backend) when `NEXT_PUBLIC_DEMO_MODE=1`, or connects to a real brain otherwise. Noindex. Deploys to Vercel with zero config. |
 | `node-agent/` | runs on each node: plugin sensors, on-node detection, mesh, buffered idempotent delivery |
 | `brain/` | FastAPI + SQLite fusion server: ingest, association, tiered localization, scoring, alerts, websocket. Fully offline. |
-| `landing/` | **the public website (one Vercel project):** marketing page at `/` and the operator console at `/console`. The console runs a self-contained browser **demo** (no backend) when `NEXT_PUBLIC_DEMO_MODE=1`, or connects to a real brain otherwise. Noindex. |
-| `ui/` | standalone copy of the operator console, for the optional self-hosted **live** deployment (docker / Hetzner) against a real brain |
 | `db/` | schema migration + node seed |
-| `deploy/` | docker-compose (brain + console), `VERCEL_DEMO.md` (deploy the website), Hetzner docs |
 | `tests/` | brain fusion, acoustic DSP, full-spine integration, synthetic eval |
-| `docs/CONTRACT.md` | the single source of truth (schema, API, WS, tiers) — read this first |
+| `docs/CONTRACT.md` | the single source of truth (schema, API, WS, tiers). Read this first. |
 | `RECON.md` `CAPABILITIES.md` `FIELD_TEST.md` | honest hardware recon, limits, and real-drone validation |
 | `pitch/DIANA_ONEPAGER.md` | the pitch, generated from the true build state |
 
@@ -32,8 +30,8 @@ pip install -r brain/requirements.txt
 TRIANGLE_TOKEN=dev uvicorn app.main:app --app-dir brain --host 0.0.0.0 --port 8000
 # health: curl localhost:8000/health
 
-# 2) Website: marketing page + operator console (new shell)
-cd landing && npm install
+# 2) Website: marketing page + operator console (at the repo root, new shell)
+npm install
 NEXT_PUBLIC_DEMO_MODE=1 npm run dev         # http://localhost:3000  (console at /console, browser demo)
 # For the live operator picture instead, unset the flag and set NEXT_PUBLIC_BRAIN_URL to the brain.
 
@@ -53,10 +51,11 @@ python tests/eval_acoustic_synthetic.py     # prints acoustic precision/recall (
 ```
 
 ## Deploy
-- Website (marketing + `/console` demo) on one Vercel project: `deploy/VERCEL_DEMO.md`.
-- Field system (brain + console on one offline machine): `deploy/README.md`.
-- Nodes (each node): `node-agent/README.md`.
-- Optional hosted live console (brain on a real server): `deploy/hetzner/README.md`.
+- **Website (marketing + `/console` demo) on Vercel:** import this repo, keep Root Directory at
+  the repo root (the app is at root, so Vercel auto-detects Next.js), add the environment variable
+  `NEXT_PUBLIC_DEMO_MODE=1`, and deploy. No other configuration.
+- **Brain (offline/local):** `TRIANGLE_TOKEN=... uvicorn app.main:app --app-dir brain --port 8000`.
+- **Nodes (each node):** `node-agent/README.md`.
 
 ## Build order (the spine first)
 Sensor recon → schema + plugin interface → **acoustic detection into the brain and onto the map**

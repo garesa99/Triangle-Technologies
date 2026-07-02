@@ -1,3 +1,5 @@
+const DEMO_URL = process.env.NEXT_PUBLIC_DEMO_URL || 'http://localhost:3000';
+
 export default function Nav() {
   return (
     <nav className="nav">
@@ -22,6 +24,9 @@ export default function Nav() {
           <a href="#node">The node</a>
           <a href="#mesh">The mesh</a>
           <a href="#honest">Capability</a>
+          <a href={DEMO_URL} target="_blank" rel="noopener noreferrer">
+            Live demo
+          </a>
           <a href="#contact" className="nav-cta">
             Contact
           </a>

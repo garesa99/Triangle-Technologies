@@ -17,6 +17,10 @@ const IMG = {
     'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1600&q=70',
 };
 
+/* Live operator console. Set NEXT_PUBLIC_DEMO_URL to the deployed (passcode-protected,
+   noindex) console for production; defaults to a local instance for review. */
+const DEMO_URL = process.env.NEXT_PUBLIC_DEMO_URL || 'http://localhost:3000';
+
 export default function Home() {
   return (
     <>
@@ -39,8 +43,9 @@ export default function Home() {
             </Reveal>
             <Reveal delay={200}>
               <p className="lead" style={{ marginTop: 28 }}>
-                A mesh of cheap passive sensors that hears drones, fuses the
-                contacts, and triangulates them.
+                A mesh of passive sensors, built from commercially available
+                components, that hears drones, fuses the contacts, and
+                triangulates them.
               </p>
             </Reveal>
             <Reveal delay={300}>
@@ -48,8 +53,8 @@ export default function Home() {
                 <a href="#contact" className="btn">
                   Request a briefing <span className="arrow">&rarr;</span>
                 </a>
-                <a href="#how" className="btn btn-ghost">
-                  How it works
+                <a href={DEMO_URL} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
+                  Open the live console <span className="arrow">&rarr;</span>
                 </a>
               </div>
             </Reveal>
@@ -116,7 +121,7 @@ export default function Home() {
                   </div>
                   <div className="stat-label">
                     Incidents near airports, borders, and critical sites keep
-                    rising — and stay cheap.
+                    rising — while the barrier to entry stays low.
                   </div>
                   <div className="stat-src">
                     Qualitative. We avoid inventing precise counts.
@@ -216,9 +221,10 @@ export default function Home() {
                 </h2>
               </Reveal>
               <Reveal delay={140}>
-                <p className="body lead" style={{ maxWidth: '52ch' }}>
-                  Cheap enough to scatter, cheap enough to lose. Purely passive —
-                  it listens, never transmits.
+                <p className="body lead" style={{ maxWidth: '54ch' }}>
+                  Built entirely from commercially available components —
+                  affordable to field at scale, and attritable by design. Purely
+                  passive: it listens, never transmits.
                 </p>
               </Reveal>
             </div>
@@ -453,6 +459,17 @@ export default function Home() {
                     style={{ marginTop: 20, fontSize: '0.78rem', color: 'var(--fg-faint)' }}
                   >
                     contact@triangletechno.com
+                  </p>
+                  <p style={{ marginTop: 24 }}>
+                    <a
+                      href={DEMO_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mono"
+                      style={{ fontSize: '0.78rem', color: 'var(--fg)', borderBottom: '1px solid var(--hairline-strong)', paddingBottom: 2 }}
+                    >
+                      → Open the live operator console
+                    </a>
                   </p>
                 </div>
               </Reveal>

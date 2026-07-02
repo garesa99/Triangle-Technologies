@@ -73,12 +73,25 @@ The three technical diagrams are original inline SVGs (ours), labeled
 "Illustrative". There are no fabricated live-detection screenshots anywhere on
 the page.
 
+## Live demo link
+
+The nav, hero, and contact section link to the live operator console via
+`NEXT_PUBLIC_DEMO_URL` (defaults to `http://localhost:3000` for local review).
+For production set it to the deployed console URL, which should be
+**passcode-protected and noindex** (guardrail):
+
+```bash
+NEXT_PUBLIC_DEMO_URL=https://console.triangletechno.com npm run build
+```
+(or set it in the Vercel project's Environment Variables.)
+
 ## Design system
 
-- Background near-black `#0A0A0B`, white display type with tight tracking
-  (`-0.04em`), single accent signal-orange `#FF6A00`.
+- Fully **black & white**: background near-black `#0A0A0B`, white display type with
+  tight tracking (`-0.04em`). The single "accent" is pure white; hierarchy comes
+  from weight, size, and hairlines, not colour.
 - Inter (display/body) + JetBrains Mono (specs/labels/captions) via `next/font`.
 - Hairline rules, sharp corners, generous negative space, full-bleed imagery
-  with dark overlays and a unified duotone filter.
+  treated to pure `grayscale(1)` so photos read as stark monochrome silhouettes.
 - Scroll-triggered reveals (fade + small translate-y) via `IntersectionObserver`
   in `app/components/Reveal.tsx`. Respects `prefers-reduced-motion`.

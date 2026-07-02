@@ -5,7 +5,7 @@
 
 ## Problem
 Cooperative air-awareness (Remote ID, ADS-B) only sees aircraft that **announce themselves**. The
-threat — a cheap uncooperative drone over a base, border, airport, or event — does not. Conventional
+threat — a low-cost uncooperative drone over a base, border, airport, or event — does not. Conventional
 counter-air is far too expensive to point at a €500 quadcopter. There is a cost-asymmetry gap and a
 sensing gap at the low, slow, small end of the airspace.
 
@@ -13,7 +13,7 @@ sensing gap at the low, slow, small end of the airspace.
 A mesh of **passive, attritable** sensor nodes (~€150 of commodity hardware each) that detect drones
 by the signatures they cannot suppress — **propeller acoustics** and **control/video RF** — and use
 the **absence** of a Remote ID broadcast as a friend-or-foe filter. Nodes emit nothing. The
-intelligence is in the **fusion layer and the mesh**, not any single sensor. Many cheap bearings →
+intelligence is in the **fusion layer and the mesh**, not any single sensor. Many low-cost bearings →
 one confident fix. Triangle.
 
 ## What is LIVE today (working software, tested)
@@ -40,7 +40,7 @@ one confident fix. Triangle.
 - Hardening for contested RF, wind robustness, and larger meshes.
 
 ## Why now
-Commodity SDRs, MEMS mics, and OpenDroneID receivers are cheap and ubiquitous; small-drone
+Commodity SDRs, MEMS mics, and OpenDroneID receivers are inexpensive and widely available; small-drone
 incursions at airports and critical infrastructure are a recurring, publicly-reported problem.
 Passive, distributed, attritable sensing is the affordable counter to an affordable threat.
 

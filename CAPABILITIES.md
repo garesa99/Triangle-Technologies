@@ -4,7 +4,7 @@ Honesty is the credibility. This is the document a serious evaluator reads first
 here is bounded by physics and by what the code actually implements.
 
 ## What the system IS
-A mesh of cheap passive nodes that detects **uncooperative** drones (no Remote ID broadcast) by
+A mesh of low-cost passive nodes, built from commercially available components, that detects **uncooperative** drones (no Remote ID broadcast) by
 signatures they cannot suppress — propeller **sound** and control/video **RF** — fuses those
 detections across nodes, and localizes to an **honestly-labeled** tier (ray / ellipse / fix).
 

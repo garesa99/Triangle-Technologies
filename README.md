@@ -1,9 +1,9 @@
 # Triangle Mesh
 
-Software for a mesh of cheap, self-built passive sensor nodes that detect **uncooperative** drones
+Software for a mesh of low-cost, self-built passive sensor nodes — assembled from commercially available components — that detect **uncooperative** drones
 — drones that do not broadcast their position — by signatures they cannot suppress (propeller
 **sound**, control/video **RF**), use the **absence** of a Remote ID broadcast as a friend-or-foe
-filter, fuse detections across nodes, and localize to an **honestly-labeled** tier. Many cheap
+filter, fuse detections across nodes, and localize to an **honestly-labeled** tier. Many low-cost
 bearings → one confident fix. Triangle.
 
 > Non-negotiable: **real signals only.** No synthetic drones or fake tracks ever reach the live

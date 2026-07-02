@@ -19,3 +19,15 @@ tests/samples/*.iq
 node-agent/weights/*.bin
 node-agent/config.local.yaml
 demo/__pycache__/
+
+# Backend/system kept local, not published to the website repo
+brain/
+node-agent/
+db/
+tests/
+demo/
+docs/
+pitch/
+RECON.md
+CAPABILITIES.md
+FIELD_TEST.md

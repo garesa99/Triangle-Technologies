@@ -13,12 +13,12 @@ bearings → one confident fix. Triangle.
 ## Layout
 | dir | what |
 |---|---|
-| `node-agent/` | runs on each Pi: plugin sensors, on-node detection, mesh, buffered idempotent delivery |
+| `node-agent/` | runs on each node: plugin sensors, on-node detection, mesh, buffered idempotent delivery |
 | `brain/` | FastAPI + SQLite fusion server: ingest, association, tiered localization, scoring, alerts, websocket. Fully offline. |
-| `ui/` | offline Next.js + MapLibre operator picture |
-| `landing/` | public Anduril-style static landing page (Vercel, noindex) |
+| `landing/` | **the public website (one Vercel project):** marketing page at `/` and the operator console at `/console`. The console runs a self-contained browser **demo** (no backend) when `NEXT_PUBLIC_DEMO_MODE=1`, or connects to a real brain otherwise. Noindex. |
+| `ui/` | standalone copy of the operator console, for the optional self-hosted **live** deployment (docker / Hetzner) against a real brain |
 | `db/` | schema migration + node seed |
-| `deploy/` | docker-compose (brain+UI), deploy docs |
+| `deploy/` | docker-compose (brain + console), `VERCEL_DEMO.md` (deploy the website), Hetzner docs |
 | `tests/` | brain fusion, acoustic DSP, full-spine integration, synthetic eval |
 | `docs/CONTRACT.md` | the single source of truth (schema, API, WS, tiers) — read this first |
 | `RECON.md` `CAPABILITIES.md` `FIELD_TEST.md` | honest hardware recon, limits, and real-drone validation |
@@ -32,8 +32,10 @@ pip install -r brain/requirements.txt
 TRIANGLE_TOKEN=dev uvicorn app.main:app --app-dir brain --host 0.0.0.0 --port 8000
 # health: curl localhost:8000/health
 
-# 2) Operator UI (new shell)
-cd ui && npm install && npm run dev        # http://localhost:3000
+# 2) Website: marketing page + operator console (new shell)
+cd landing && npm install
+NEXT_PUBLIC_DEMO_MODE=1 npm run dev         # http://localhost:3000  (console at /console, browser demo)
+# For the live operator picture instead, unset the flag and set NEXT_PUBLIC_BRAIN_URL to the brain.
 
 # 3) A node (new shell) — no sensors present on a laptop, so it registers and reports silence
 cd node-agent && pip install -r requirements.txt
@@ -51,9 +53,10 @@ python tests/eval_acoustic_synthetic.py     # prints acoustic precision/recall (
 ```
 
 ## Deploy
-- Field system (brain + UI on one offline machine): `deploy/README.md`.
-- Nodes (each Pi): `node-agent/README.md`.
-- Landing page (Vercel static export, noindex): `landing/README.md`.
+- Website (marketing + `/console` demo) on one Vercel project: `deploy/VERCEL_DEMO.md`.
+- Field system (brain + console on one offline machine): `deploy/README.md`.
+- Nodes (each node): `node-agent/README.md`.
+- Optional hosted live console (brain on a real server): `deploy/hetzner/README.md`.
 
 ## Build order (the spine first)
 Sensor recon → schema + plugin interface → **acoustic detection into the brain and onto the map**

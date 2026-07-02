@@ -82,8 +82,8 @@ export default function AlertFeed(props: Props) {
 
             {/* Evidence chain */}
             <div style={{ marginTop: 6, fontSize: 10, lineHeight: 1.6 }}>
-              <EvRow k="nodes" v={ev.nodes?.join(", ") || "—"} />
-              <EvRow k="sensors" v={ev.sensors?.join(", ") || "—"} />
+              <EvRow k="nodes" v={ev.nodes?.join(", ") || "n/a"} />
+              <EvRow k="sensors" v={ev.sensors?.join(", ") || "n/a"} />
               <EvRow
                 k="localization"
                 v={ev.localization + (ev.note ? ` · ${ev.note}` : "")}

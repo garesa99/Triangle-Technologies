@@ -17,10 +17,10 @@ function count(v: unknown): number | null {
   return null;
 }
 
-function lock(v: unknown): "OK" | "—" | "NO" {
+function lock(v: unknown): "OK" | "n/a" | "NO" {
   if (v === true) return "OK";
   if (v === false) return "NO";
-  return "—";
+  return "n/a";
 }
 
 export default function NodeHealthStrip(props: Props) {
@@ -85,7 +85,7 @@ export default function NodeHealthStrip(props: Props) {
                 pps <Lock v={lock(h.pps_lock)} />
               </span>
               <span>
-                neigh <span style={{ color: COLOR.text }}>{neighbors ?? "—"}</span>
+                neigh <span style={{ color: COLOR.text }}>{neighbors ?? "n/a"}</span>
               </span>
             </div>
           </button>
@@ -95,7 +95,7 @@ export default function NodeHealthStrip(props: Props) {
   );
 }
 
-function Lock({ v }: { v: "OK" | "—" | "NO" }) {
+function Lock({ v }: { v: "OK" | "n/a" | "NO" }) {
   const color = v === "OK" ? COLOR.online : v === "NO" ? COLOR.stale : COLOR.textDim;
   return <span style={{ color }}>{v}</span>;
 }

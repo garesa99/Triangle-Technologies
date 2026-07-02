@@ -29,12 +29,12 @@ export default function Legend() {
       >
         Localization quality
       </div>
-      <Row color={COLOR.bearing} label="BEARING_ONLY — ray from node">
+      <Row color={COLOR.bearing} label="BEARING_ONLY: ray from node">
         <svg width="26" height="10">
           <line x1="0" y1="5" x2="26" y2="5" stroke={COLOR.bearing} strokeWidth="1.5" />
         </svg>
       </Row>
-      <Row color={COLOR.coarse} label="COARSE_FIX — uncertainty ellipse">
+      <Row color={COLOR.coarse} label="COARSE_FIX: uncertainty ellipse">
         <svg width="26" height="14">
           <ellipse
             cx="13"
@@ -47,7 +47,7 @@ export default function Legend() {
           />
         </svg>
       </Row>
-      <Row color={COLOR.precise} label="PRECISE_FIX — point + small ellipse">
+      <Row color={COLOR.precise} label="PRECISE_FIX: point and small ellipse">
         <svg width="26" height="14">
           <ellipse cx="13" cy="7" rx="7" ry="4" fill="none" stroke={COLOR.precise} strokeWidth="1" />
           <rect x="10" y="4" width="6" height="6" fill={COLOR.accent} transform="rotate(45 13 7)" />

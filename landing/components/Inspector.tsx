@@ -130,11 +130,11 @@ function TrackBody({ t }: { t: Track }) {
         accent={foe.uncooperative}
       />
       <Field k="position" v={t.lat != null ? `${num(t.lat, 5)}, ${num(t.lon, 5)}` : "no fix (ray only)"} />
-      <Field k="uncertainty" v={t.uncertainty_m != null ? `${num(t.uncertainty_m, 0)} m` : "—"} />
-      <Field k="heading" v={t.heading_deg != null ? `${num(t.heading_deg, 0)}°` : "—"} />
-      <Field k="nodes" v={t.node_ids.join(", ") || "—"} />
-      <Field k="sensors" v={t.sensor_types.join(", ") || "—"} />
-      <Field k="relay path" v={t.relay_path.length ? t.relay_path.join(" → ") : "—"} />
+      <Field k="uncertainty" v={t.uncertainty_m != null ? `${num(t.uncertainty_m, 0)} m` : "n/a"} />
+      <Field k="heading" v={t.heading_deg != null ? `${num(t.heading_deg, 0)}°` : "n/a"} />
+      <Field k="nodes" v={t.node_ids.join(", ") || "n/a"} />
+      <Field k="sensors" v={t.sensor_types.join(", ") || "n/a"} />
+      <Field k="relay path" v={t.relay_path.length ? t.relay_path.join(" → ") : "n/a"} />
       <Field k="first seen" v={fmtTime(t.first_seen)} />
       <Field k="last seen" v={fmtTime(t.last_seen)} />
 

@@ -231,7 +231,7 @@ export default function Console() {
                 textTransform: "uppercase",
               }}
             >
-              ⚠ Simulated scenario — synthetic audio through the real detection
+              ⚠ Simulated scenario. Synthetic audio through the real detection
               pipeline. Not live sensor data.
             </div>
           )}

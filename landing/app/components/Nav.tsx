@@ -4,7 +4,7 @@ export default function Nav() {
   return (
     <nav className="nav">
       <div className="nav-inner">
-        <a href="#top" className="nav-brand" aria-label="Triangle Mesh — home">
+        <a href="#top" className="nav-brand" aria-label="Triangle Mesh, home">
           <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
             <polygon
               points="9,2 16,15 2,15"

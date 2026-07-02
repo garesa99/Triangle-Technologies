@@ -7,7 +7,7 @@ import {
   MeshDiagram,
 } from './components/Diagrams';
 
-/* Direct Unsplash hotlinks — Unsplash License (free commercial use, no
+/* Direct Unsplash hotlinks (Unsplash License: free commercial use, no
    attribution required). Cataloged in public/images/CREDITS.md.
    Images degrade to a dark solid block via <Bleed>. */
 const IMG = {
@@ -17,7 +17,7 @@ const IMG = {
     'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1600&q=70',
 };
 
-/* Live operator console — an internal route of this same site (/console). Override with
+/* Live operator console. Internal route of this same site (/console). Override with
    NEXT_PUBLIC_DEMO_URL only if you host the console elsewhere. */
 const DEMO_URL = process.env.NEXT_PUBLIC_DEMO_URL || '/console';
 
@@ -26,7 +26,7 @@ export default function Home() {
     <>
       <Nav />
       <main id="top">
-        {/* ---------------- HERO ---------------- */}
+        {/* HERO */}
         <section className="hero">
           <div className="hero-media">
             <Bleed src={IMG.hero} alt="An uncrewed aircraft in silhouette against an open sky" className="" style={{ position: 'absolute', inset: 0 }} />
@@ -41,8 +41,8 @@ export default function Home() {
             <Reveal delay={200}>
               <p className="lead" style={{ marginTop: 28 }}>
                 A mesh of passive sensors, built from commercially available
-                components, that hears drones, fuses the contacts, and
-                triangulates them.
+                parts, that hears drones, fuses the contacts, and triangulates
+                them.
               </p>
             </Reveal>
             <Reveal delay={300}>
@@ -58,12 +58,12 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ---------------- THE PROBLEM ---------------- */}
+        {/* THE PROBLEM */}
         <section id="problem" className="section-pad">
           <div className="wrap">
             <div className="sec-head">
               <Reveal>
-                <span className="eyebrow">01 — The problem</span>
+                <span className="eyebrow">01 · The problem</span>
               </Reveal>
               <Reveal delay={80}>
                 <h2 className="h2" style={{ marginTop: 20 }}>
@@ -90,7 +90,7 @@ export default function Home() {
                     against them can cost far more per shot.
                   </div>
                   <div className="stat-src">
-                    Qualitative — figures vary by system.
+                    Qualitative. Figures vary by system.
                   </div>
                 </div>
                 <div className="stat">
@@ -98,8 +98,8 @@ export default function Home() {
                     Airport <span className="accent">incursions</span>
                   </div>
                   <div className="stat-label">
-                    Drone sightings closed London Gatwick for ~33 hours in
-                    December 2018, affecting ~140,000 passengers.
+                    Drone sightings closed London Gatwick for about 33 hours in
+                    December 2018, affecting around 140,000 passengers.
                   </div>
                   <div className="stat-src">
                     Source:{' '}
@@ -118,7 +118,7 @@ export default function Home() {
                   </div>
                   <div className="stat-label">
                     Incidents near airports, borders, and critical sites keep
-                    rising — while the barrier to entry stays low.
+                    rising. The barrier to entry stays low.
                   </div>
                   <div className="stat-src">
                     Qualitative. We avoid inventing precise counts.
@@ -133,12 +133,12 @@ export default function Home() {
           <hr className="hairline" />
         </div>
 
-        {/* ---------------- HOW IT WORKS ---------------- */}
+        {/* HOW IT WORKS */}
         <section id="how" className="section-pad">
           <div className="wrap">
             <div className="sec-head">
               <Reveal>
-                <span className="eyebrow">02 — How it works</span>
+                <span className="eyebrow">02 · How it works</span>
               </Reveal>
               <Reveal delay={80}>
                 <h2 className="h2" style={{ marginTop: 20 }}>
@@ -152,17 +152,17 @@ export default function Home() {
                 <span className="step-index">LISTEN</span>
                 <h3>Signatures it cannot hide</h3>
                 <p className="body">
-                  Each node passively picks up rotor acoustics and control /
-                  video RF. A quiet drone still moves air and still talks to its
-                  pilot.
+                  Each node passively picks up rotor sound and the RF of control
+                  and video links. A quiet drone still moves air, and still talks
+                  to its pilot.
                 </p>
               </Reveal>
               <Reveal className="step" delay={100}>
                 <span className="step-index">FUSE</span>
-                <h3>Cross-cue and friend-or-foe</h3>
+                <h3>Cross-cue and friend or foe</h3>
                 <p className="body">
                   Contacts combine across the mesh. A cooperative drone
-                  broadcasts Remote ID — its <em>absence</em> around a track is
+                  broadcasts Remote ID. Its <em>absence</em> around a track is
                   itself a signal.
                 </p>
               </Reveal>
@@ -170,8 +170,8 @@ export default function Home() {
                 <span className="step-index">LOCATE</span>
                 <h3>Triangulate, honestly</h3>
                 <p className="body">
-                  Enough bearings give a fix with an explicit uncertainty
-                  ellipse. Fewer nodes, coarser fix — and the system says so.
+                  Enough bearings give a fix with a clear uncertainty ellipse.
+                  Fewer nodes give a coarser fix, and the system says so.
                 </p>
               </Reveal>
             </div>
@@ -188,29 +188,29 @@ export default function Home() {
                 <span className="illus-tag">Illustrative</span>
                 <TriangulationDiagram />
                 <div className="diagram-cap">
-                  Fig. 01 — Bearing triangulation &amp; uncertainty ellipse
+                  Fig. 01 · Bearing triangulation and uncertainty ellipse
                 </div>
               </Reveal>
               <Reveal className="diagram" delay={100}>
                 <span className="illus-tag">Illustrative</span>
                 <SensorStackDiagram />
-                <div className="diagram-cap">Fig. 02 — Passive sensor layers</div>
+                <div className="diagram-cap">Fig. 02 · Passive sensor layers</div>
               </Reveal>
               <Reveal className="diagram" delay={200}>
                 <span className="illus-tag">Illustrative</span>
                 <MeshDiagram />
-                <div className="diagram-cap">Fig. 03 — Mesh relay topology</div>
+                <div className="diagram-cap">Fig. 03 · Mesh relay topology</div>
               </Reveal>
             </div>
           </div>
         </section>
 
-        {/* ---------------- THE NODE ---------------- */}
+        {/* THE NODE */}
         <section id="node" className="section-pad" style={{ background: '#08080a' }}>
           <div className="wrap">
             <div className="sec-head">
               <Reveal>
-                <span className="eyebrow">03 — The node</span>
+                <span className="eyebrow">03 · The node</span>
               </Reveal>
               <Reveal delay={80}>
                 <h2 className="h2" style={{ marginTop: 20 }}>
@@ -219,9 +219,9 @@ export default function Home() {
               </Reveal>
               <Reveal delay={140}>
                 <p className="body lead" style={{ maxWidth: '54ch' }}>
-                  Built entirely from commercially available components —
-                  affordable to field at scale, and attritable by design. Purely
-                  passive: it listens, never transmits.
+                  Built entirely from commercially available parts. Affordable to
+                  field at scale, and built to be attritable. It only listens,
+                  and never transmits.
                 </p>
               </Reveal>
             </div>
@@ -236,31 +236,31 @@ export default function Home() {
                     </tr>
                     <tr>
                       <td>Acoustic</td>
-                      <td>USB / I2S MEMS microphone array</td>
+                      <td>USB or I2S MEMS microphone array</td>
                     </tr>
                     <tr>
                       <td>RF</td>
-                      <td>SDR receiver — 2.4 &amp; 5.8 GHz survey</td>
+                      <td>SDR receiver, 2.4 and 5.8 GHz</td>
                     </tr>
                     <tr>
-                      <td>Remote-ID</td>
+                      <td>Remote ID</td>
                       <td>ESP32 OpenDroneID receiver</td>
                     </tr>
                     <tr>
-                      <td>Timing / Pos</td>
-                      <td>u-blox GNSS (time + node fix)</td>
+                      <td>Timing and position</td>
+                      <td>u-blox GNSS (time and node fix)</td>
                     </tr>
                     <tr>
                       <td>Emission</td>
-                      <td>None — receive-only, no active radar</td>
+                      <td>None. Receive only, no active radar.</td>
                     </tr>
                     <tr>
                       <td>BOM target</td>
-                      <td>~ &euro;150 per node</td>
+                      <td>About &euro;150 per node</td>
                     </tr>
                     <tr>
                       <td>Power</td>
-                      <td>Battery / solar-capable, low draw</td>
+                      <td>Battery or solar capable, low draw</td>
                     </tr>
                   </tbody>
                 </table>
@@ -268,7 +268,7 @@ export default function Home() {
                   <span className="badge hi">Passive</span>
                   <span className="badge hi">Attritable</span>
                   <span className="badge">Commodity HW</span>
-                  <span className="badge">Field-serviceable</span>
+                  <span className="badge">Field serviceable</span>
                   <span className="badge">Open schema</span>
                 </div>
               </Reveal>
@@ -285,7 +285,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ---------------- THE MESH ---------------- */}
+        {/* THE MESH */}
         <section id="mesh" className="section-pad">
           <div className="wrap">
             <div className="two-col reverse">
@@ -294,12 +294,12 @@ export default function Home() {
                   <span className="illus-tag">Illustrative</span>
                   <MeshDiagram />
                   <div className="diagram-cap">
-                    Losing a node degrades resolution — it never blinds the mesh
+                    Losing a node lowers resolution. It never blinds the mesh.
                   </div>
                 </div>
               </Reveal>
               <Reveal delay={100}>
-                <span className="eyebrow">04 — The mesh</span>
+                <span className="eyebrow">04 · The mesh</span>
                 <h2 className="h2" style={{ marginTop: 20 }}>
                   Scales with nodes. Fails gracefully.
                 </h2>
@@ -322,7 +322,7 @@ export default function Home() {
                     <span className="mark">/ /</span>
                     <span>
                       <strong>No single point of blindness.</strong> Lose a node
-                      and the mesh reroutes — resolution drops, awareness does
+                      and the mesh reroutes. Resolution drops, awareness does
                       not.
                     </span>
                   </li>
@@ -332,7 +332,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ---------------- HONEST CAPABILITY ---------------- */}
+        {/* HONEST CAPABILITY */}
         <section
           id="honest"
           className="section-pad"
@@ -341,7 +341,7 @@ export default function Home() {
           <div className="wrap">
             <div className="two-col">
               <Reveal>
-                <span className="eyebrow">05 — Honest capability</span>
+                <span className="eyebrow">05 · Honest capability</span>
                 <h2 className="h2" style={{ marginTop: 20, maxWidth: '14ch' }}>
                   Systems that overclaim get people hurt.
                 </h2>
@@ -376,12 +376,12 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ---------------- ROADMAP ---------------- */}
+        {/* ROADMAP */}
         <section id="roadmap" className="section-pad">
           <div className="wrap">
             <div className="sec-head">
               <Reveal>
-                <span className="eyebrow">06 — Roadmap &amp; extensibility</span>
+                <span className="eyebrow">06 · Roadmap and extensibility</span>
               </Reveal>
               <Reveal delay={80}>
                 <h2 className="h2" style={{ marginTop: 20 }}>
@@ -390,8 +390,8 @@ export default function Home() {
               </Reveal>
               <Reveal delay={140}>
                 <p className="body lead" style={{ maxWidth: '54ch' }}>
-                  Each future layer publishes to the same fusion schema the
-                  acoustic and RF layers already use.
+                  Each new layer publishes to the same fusion schema the acoustic
+                  and RF layers already use.
                 </p>
               </Reveal>
             </div>
@@ -416,19 +416,19 @@ export default function Home() {
                 <div className="road">
                   <span className="mono-tag">Layer · Camera</span>
                   <h3>Visual cueing</h3>
-                  <p>Slew-to-cue optical confirmation on an existing track.</p>
+                  <p>Slew to cue optical confirmation on an existing track.</p>
                 </div>
               </div>
             </Reveal>
           </div>
         </section>
 
-        {/* ---------------- CONTACT / FOOTER ---------------- */}
+        {/* CONTACT / FOOTER */}
         <section id="contact" className="contact">
           <div className="wrap">
             <div className="contact-inner">
               <Reveal>
-                <span className="eyebrow">07 — Contact</span>
+                <span className="eyebrow">07 · Contact</span>
                 <h2 className="h2" style={{ marginTop: 20, maxWidth: '18ch' }}>
                   Talk to us about the uncooperative airspace.
                 </h2>
@@ -440,14 +440,14 @@ export default function Home() {
                   Triangle Mesh is an independent effort. This page uses no NATO
                   or DIANA marks and implies no endorsement, affiliation, or
                   selection. All diagrams are our own technical illustrations,
-                  not live-detection screenshots.
+                  not screenshots of live detections.
                 </p>
               </Reveal>
               <Reveal delay={120}>
                 <div>
                   <a
                     className="btn"
-                    href="mailto:contact@triangletechno.com?subject=Triangle%20Mesh%20—%20Briefing%20request&body=Hi%20Triangle%20Mesh%20team%2C%0A%0AI%27d%20like%20to%20learn%20more%20about%20the%20passive%20drone-detection%20mesh.%0A%0A"
+                    href="mailto:contact@triangletechno.com?subject=Triangle%20Mesh%20briefing%20request&body=Hi%20Triangle%20Mesh%20team%2C%0A%0AI%27d%20like%20to%20learn%20more%20about%20the%20passive%20drone%20detection%20mesh.%0A%0A"
                   >
                     Email the team <span className="arrow">&rarr;</span>
                   </a>
@@ -463,7 +463,7 @@ export default function Home() {
                       className="mono"
                       style={{ fontSize: '0.78rem', color: 'var(--fg)', borderBottom: '1px solid var(--hairline-strong)', paddingBottom: 2 }}
                     >
-                      → Open the live operator console
+                      &rarr; Open the live operator console
                     </a>
                   </p>
                 </div>
@@ -471,7 +471,7 @@ export default function Home() {
             </div>
 
             <div className="footer-bar">
-              <span>TRIANGLE MESH · PASSIVE DRONE-DETECTION MESH</span>
+              <span>TRIANGLE MESH · PASSIVE DRONE DETECTION MESH</span>
               <span>NOINDEX · PRE-LAUNCH · {new Date().getFullYear()}</span>
             </div>
           </div>

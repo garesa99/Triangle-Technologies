@@ -1,0 +1,34 @@
+# Triangle Mesh — brain + operator UI on ONE machine (field laptop / Pi / small VPS).
+# Runs fully offline. Nodes reach the brain over the LAN on port 8000.
+#
+#   TRIANGLE_TOKEN=your-strong-token docker compose up --build
+#
+services:
+  brain:
+    build: ../brain
+    environment:
+      - TRIANGLE_TOKEN=${TRIANGLE_TOKEN:-triangle-dev-token}
+      - TRIANGLE_DB=/data/triangle.db
+      # Tunables (see brain/app/config.py): ALERT_THRESHOLD, ASSOC_WINDOW_S, etc.
+    volumes:
+      - brain-data:/data
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+
+  ui:
+    build:
+      context: ../ui
+      args:
+        # The UI runs in the operator's browser, so it needs a URL it can reach. On the field
+        # laptop that is the host's LAN IP:8000. Set BRAIN_PUBLIC_URL accordingly.
+        - NEXT_PUBLIC_BRAIN_URL=${BRAIN_PUBLIC_URL:-http://localhost:8000}
+        - NEXT_PUBLIC_BRAIN_TOKEN=${TRIANGLE_TOKEN:-triangle-dev-token}
+    ports:
+      - "3000:3000"
+    depends_on:
+      - brain
+    restart: unless-stopped
+
+volumes:
+  brain-data:

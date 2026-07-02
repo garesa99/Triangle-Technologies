@@ -1,0 +1,84 @@
+# Triangle Mesh — Landing Page
+
+Public marketing landing page for **Triangle Mesh**, a passive, distributed,
+attritable drone-detection mesh. Standalone Next.js (App Router, TypeScript)
+app that **static-exports** and deploys to Vercel.
+
+> This app is **completely separate** from the field system. It shares no code,
+> secrets, or configuration with the sensor/brain codebase.
+
+## Pre-launch status: NOINDEX
+
+The site ships with `<meta name="robots" content="noindex, nofollow">` (set in
+`app/layout.tsx`). **It will not be indexed by search engines.** Remove the
+`robots` metadata / meta tag only when you are ready for public launch.
+
+## Local development
+
+```bash
+npm install
+npm run dev      # http://localhost:3000
+```
+
+## Build (static export)
+
+`next.config.mjs` sets `output: 'export'`, so a production build emits a fully
+static site to `out/`:
+
+```bash
+npm install
+npm run build    # produces ./out
+```
+
+`out/` is a plain static bundle (HTML/CSS/JS) — no Node server required to
+serve it. Fonts (Inter, JetBrains Mono) are self-hosted via `next/font`.
+
+## Deploy to Vercel
+
+The static `out/` directory deploys cleanly on Vercel.
+
+**Option A — Git integration (recommended):**
+
+1. Push this `landing/` directory as its own repo (or set the Vercel project's
+   **Root Directory** to `landing`).
+2. Import the repo in the Vercel dashboard.
+3. Framework preset: **Next.js** (Vercel auto-detects `output: 'export'` and
+   serves the static build). Build command `npm run build`, output `out`.
+4. Deploy.
+
+**Option B — Vercel CLI:**
+
+```bash
+npm i -g vercel
+vercel            # preview
+vercel --prod     # production
+```
+
+If you prefer to deploy the raw static bundle as a static site:
+
+```bash
+npm run build
+vercel deploy --prebuilt   # after `vercel build`, or point any static host at ./out
+```
+
+## Imagery & licensing
+
+Photos are Unsplash hotlinks (Unsplash License — free commercial use, no
+attribution required). See [`public/images/CREDITS.md`](public/images/CREDITS.md).
+Images degrade gracefully: if a hotlink is unreachable, the layout is unaffected
+and a dark solid block is shown instead. Core layout never depends on a runtime
+image fetch.
+
+The three technical diagrams are original inline SVGs (ours), labeled
+"Illustrative". There are no fabricated live-detection screenshots anywhere on
+the page.
+
+## Design system
+
+- Background near-black `#0A0A0B`, white display type with tight tracking
+  (`-0.04em`), single accent signal-orange `#FF6A00`.
+- Inter (display/body) + JetBrains Mono (specs/labels/captions) via `next/font`.
+- Hairline rules, sharp corners, generous negative space, full-bleed imagery
+  with dark overlays and a unified duotone filter.
+- Scroll-triggered reveals (fade + small translate-y) via `IntersectionObserver`
+  in `app/components/Reveal.tsx`. Respects `prefers-reduced-motion`.

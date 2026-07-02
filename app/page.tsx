@@ -471,8 +471,8 @@ export default function Home() {
             </div>
 
             <div className="footer-bar">
-              <span>TRIANGLE MESH · PASSIVE DRONE DETECTION MESH</span>
-              <span>NOINDEX · PRE-LAUNCH · {new Date().getFullYear()}</span>
+              <span>TRIANGLE MESH · PASSIVE DRONE DETECTION</span>
+              <span>&copy; {new Date().getFullYear()} Triangle Technologies · Built for the NATO DIANA application</span>
             </div>
           </div>
         </section>

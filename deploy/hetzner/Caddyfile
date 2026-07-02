@@ -1,0 +1,23 @@
+# Caddy: automatic HTTPS + one passcode for the whole demo, single origin.
+{$DOMAIN} {
+	encode gzip
+
+	# One passcode (HTTP basic auth) gates EVERYTHING — console, brain API, and websocket.
+	# Because it is all one origin, the browser sends the credentials to /brain/* and /brain/ws too.
+	basic_auth {
+		{$BASIC_AUTH_USER} {$BASIC_AUTH_HASH}
+	}
+
+	# Keep the demo out of search indexes even behind the passcode.
+	header X-Robots-Tag "noindex, nofollow"
+
+	# Brain REST + websocket under /brain/* (prefix stripped -> /nodes, /tracks, /ws, ...).
+	handle_path /brain/* {
+		reverse_proxy brain:8000
+	}
+
+	# Everything else -> the operator console. Websockets upgrade transparently.
+	handle {
+		reverse_proxy ui:3000
+	}
+}

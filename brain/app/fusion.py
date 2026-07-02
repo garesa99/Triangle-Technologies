@@ -14,10 +14,16 @@ from typing import Any
 
 from . import db, localization, remote_id, scoring
 from .config import settings
+from .geo import haversine_m
 from .util import epoch_s, now_iso
 
 # recent window we reconsider on each batch (a bit wider than the assoc window)
 FUSION_WINDOW_S = 15.0
+# temporal track continuity: a fresh cluster reuses a recent nearby track's id
+TRACK_MATCH_TIME_S = 10.0
+TRACK_MATCH_DIST_M = 600.0
+# a track with no fresh detections is closed (state != active) so the picture stays current
+STALE_TTL_S = 20.0
 
 
 def _row_to_dict(r) -> dict[str, Any]:
@@ -62,14 +68,15 @@ def process_recent() -> dict[str, list]:
     from .association import cluster
     groups = cluster(dets)
     gf = _geofences()
+    latest_epoch = epoch_s(latest["m"])
     changed_tracks: list[dict] = []
     changed_alerts: list[dict] = []
 
     for group in groups:
-        track_id = _stable_track_id(group)
         foe = remote_id.classify_cooperative(group)
-
         loc = localization.localize(group)
+        # continuity: attach to a recent nearby active track if one exists, else a new id
+        track_id = _assign_track_id(group, loc, latest_epoch)
 
         # history for heading: prior located points of this track + this fix
         hist = [
@@ -84,6 +91,9 @@ def process_recent() -> dict[str, list]:
         node_ids = sorted({d["node_id"] for d in group})
         sensor_types = sorted({d["sensor_type"] for d in group})
         relay_path = sorted({d["relayed_via"] for d in group if d.get("relayed_via")})
+        # provenance: a track is bench-flagged if ANY contributing detection was a labeled
+        # bench-injected test signal — the UI surfaces this so it is never read as live.
+        bench = 1 if any((d.get("raw_features") or {}).get("bench_test") for d in group) else 0
         conf = max(d["confidence"] for d in group)
         sig = max(group, key=lambda d: d["confidence"])["signature_class"]
 
@@ -102,8 +112,8 @@ def process_recent() -> dict[str, list]:
             """INSERT INTO tracks
                (track_id, first_seen, last_seen, localization, lat, lon, uncertainty_m,
                 heading_deg, signature_class, confidence, cooperative, threat_score,
-                threat_breakdown, node_ids, sensor_types, relay_path, state)
-               VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, 'active')
+                threat_breakdown, node_ids, sensor_types, relay_path, bench_test, state)
+               VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, 'active')
                ON CONFLICT(track_id) DO UPDATE SET
                  last_seen=excluded.last_seen, localization=excluded.localization,
                  lat=excluded.lat, lon=excluded.lon, uncertainty_m=excluded.uncertainty_m,
@@ -111,10 +121,10 @@ def process_recent() -> dict[str, list]:
                  confidence=excluded.confidence, cooperative=excluded.cooperative,
                  threat_score=excluded.threat_score, threat_breakdown=excluded.threat_breakdown,
                  node_ids=excluded.node_ids, sensor_types=excluded.sensor_types,
-                 relay_path=excluded.relay_path, state='active'""",
+                 relay_path=excluded.relay_path, bench_test=excluded.bench_test, state='active'""",
             (track_id, first_seen, last_seen, loc["localization"], loc["lat"], loc["lon"],
              loc["uncertainty_m"], hdg, sig, conf, int(foe["cooperative"]), threat["score"],
-             db.j(threat), db.j(node_ids), db.j(sensor_types), db.j(relay_path)),
+             db.j(threat), db.j(node_ids), db.j(sensor_types), db.j(relay_path), bench),
         )
         for d in group:
             db.execute("UPDATE detections SET track_id=? WHERE detection_id=?",
@@ -129,7 +139,38 @@ def process_recent() -> dict[str, list]:
             if a:
                 changed_alerts.append(a)
 
+    # close tracks that have gone quiet so the operator picture reflects only current activity
+    db.execute("UPDATE tracks SET state='stale' WHERE state='active' AND last_seen < ?",
+               (_iso_at(latest_epoch - STALE_TTL_S),))
+
     return {"tracks": changed_tracks, "alerts": changed_alerts}
+
+
+def _assign_track_id(group: list[dict], loc: dict, latest_epoch: float) -> str:
+    """Temporal continuity: reuse a recent active track's id when this cluster plausibly
+    continues it (nearest fix within a gate, or a shared contributing node for bearing-only),
+    else mint a new stable id. Keeps a moving target as ONE track instead of many."""
+    cutoff = _iso_at(latest_epoch - TRACK_MATCH_TIME_S)
+    rows = db.query(
+        "SELECT track_id, lat, lon, node_ids FROM tracks WHERE state='active' AND last_seen >= ?",
+        (cutoff,),
+    )
+    if loc.get("lat") is not None:
+        best, best_d = None, TRACK_MATCH_DIST_M
+        for r in rows:
+            if r["lat"] is None:
+                continue
+            d = haversine_m(loc["lat"], loc["lon"], r["lat"], r["lon"])
+            if d < best_d:
+                best, best_d = r["track_id"], d
+        if best:
+            return best
+    else:
+        gnodes = {d["node_id"] for d in group}
+        for r in rows:
+            if gnodes & set(db.loads(r["node_ids"]) or []):
+                return r["track_id"]
+    return _stable_track_id(group)
 
 
 def _upsert_alert(track_id, threat, loc, foe, node_ids, sensor_types, relay_path):
@@ -169,6 +210,7 @@ def _load_track(track_id: str, loc: dict, foe: dict) -> dict:
     t["relay_path"] = db.loads(t["relay_path"])
     t["threat_breakdown"] = db.loads(t["threat_breakdown"])
     t["cooperative"] = bool(t["cooperative"])
+    t["bench_test"] = bool(t.get("bench_test"))
     t["rays"] = loc.get("rays", [])
     t["localization_note"] = loc.get("note")
     t["friend_or_foe"] = foe

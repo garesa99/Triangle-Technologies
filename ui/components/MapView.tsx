@@ -324,8 +324,16 @@ function addLayers(map: MLMap) {
         COLOR.precise,
         COLOR.coarse,
       ],
-      "line-width": 1,
-      "line-opacity": 0.7,
+      // B&W tier distinction: PRECISE is a solid bright ring, COARSE is a dashed dimmer ring.
+      "line-dasharray": [
+        "match",
+        ["get", "tier"],
+        "PRECISE_FIX",
+        ["literal", [1, 0]],
+        ["literal", [3, 3]],
+      ],
+      "line-width": ["match", ["get", "tier"], "PRECISE_FIX", 1.4, 1],
+      "line-opacity": 0.8,
     },
   });
 

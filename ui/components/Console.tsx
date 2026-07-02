@@ -27,7 +27,7 @@ export default function Console() {
   const [busy, setBusy] = useState<Record<string, boolean>>({});
   const [banner, setBanner] = useState<string | null>(null);
 
-  // Alert state per track (drives the orange pulse on the map).
+  // Alert state per track (drives the white pulse on the map).
   const alertStateByTrack = useMemo(() => {
     const m: Record<string, string> = {};
     for (const a of alerts) {
@@ -145,6 +145,9 @@ export default function Console() {
   }, [drawing]);
 
   const hasTracks = tracks.length > 0;
+  // Provenance guard: if ANY active track is a bench-injected test signal, say so loudly so it
+  // is never read as a live field detection.
+  const benchActive = useMemo(() => tracks.some((t) => t.bench_test), [tracks]);
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
@@ -179,6 +182,30 @@ export default function Console() {
           />
 
           <Legend />
+
+          {/* Bench-signal provenance banner — persistent while any bench track is active. */}
+          {benchActive && (
+            <div
+              style={{
+                position: "absolute",
+                top: 12,
+                left: "50%",
+                transform: "translateX(-50%)",
+                background: "rgba(14,14,16,0.95)",
+                border: `1px solid ${COLOR.accent}`,
+                padding: "7px 14px",
+                letterSpacing: "0.12em",
+                fontSize: 11,
+                fontWeight: 600,
+                zIndex: 6,
+                pointerEvents: "none",
+                textTransform: "uppercase",
+              }}
+            >
+              ⚠ Bench test signal — synthetic audio through the real pipeline, not a
+              live detection
+            </div>
+          )}
 
           {/* Honest empty state — NEVER seed fake contacts. */}
           {!hasTracks && (

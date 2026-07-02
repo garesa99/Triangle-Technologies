@@ -8,19 +8,13 @@ import {
 } from './components/Diagrams';
 
 /* Direct Unsplash hotlinks — Unsplash License (free commercial use, no
-   attribution required). Also cataloged in public/images/CREDITS.md.
+   attribution required). Cataloged in public/images/CREDITS.md.
    Images degrade to a dark solid block via <Bleed>. */
 const IMG = {
   hero:
-    'https://images.unsplash.com/photo-1473968512647-3e447244af8f?auto=format&fit=crop&w=2000&q=70',
-  terrain:
-    'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1600&q=70',
-  tower:
-    'https://images.unsplash.com/photo-1518623489648-a173ef7824f3?auto=format&fit=crop&w=1600&q=70',
+    'https://images.unsplash.com/photo-1569228593208-6314ad85a2ba?auto=format&fit=crop&w=2000&q=70',
   circuit:
     'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1600&q=70',
-  dusk:
-    'https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1600&q=70',
 };
 
 export default function Home() {
@@ -31,7 +25,7 @@ export default function Home() {
         {/* ---------------- HERO ---------------- */}
         <section className="hero">
           <div className="hero-media">
-            <Bleed src={IMG.hero} alt="A drone silhouette against an open sky" className="" style={{ position: 'absolute', inset: 0 }} />
+            <Bleed src={IMG.hero} alt="An uncrewed aircraft in silhouette against an open sky" className="" style={{ position: 'absolute', inset: 0 }} />
           </div>
           <div className="hero-grid-lines" aria-hidden="true" />
           <div className="hero-content">
@@ -45,8 +39,8 @@ export default function Home() {
             </Reveal>
             <Reveal delay={200}>
               <p className="lead" style={{ marginTop: 28 }}>
-                Passive, distributed, attritable sensing for the uncooperative
-                airspace.
+                A mesh of cheap passive sensors that hears drones, fuses the
+                contacts, and triangulates them.
               </p>
             </Reveal>
             <Reveal delay={300}>
@@ -71,15 +65,14 @@ export default function Home() {
               </Reveal>
               <Reveal delay={80}>
                 <h2 className="h2" style={{ marginTop: 20 }}>
-                  Cooperative systems only see the aircraft that announce
+                  Today&rsquo;s systems only see the aircraft that announce
                   themselves.
                 </h2>
               </Reveal>
               <Reveal delay={140}>
-                <p className="body lead" style={{ maxWidth: '60ch' }}>
-                  Remote ID and ADS-B assume a compliant operator. The threat is
-                  the drone that broadcasts nothing: no transponder, no license,
-                  no intention of being found. That is precisely the gap.
+                <p className="body lead" style={{ maxWidth: '54ch' }}>
+                  Remote ID and ADS-B assume a compliant operator. The threat
+                  broadcasts nothing. That is the gap.
                 </p>
               </Reveal>
             </div>
@@ -91,13 +84,11 @@ export default function Home() {
                     Cost <span className="accent">asymmetry</span>
                   </div>
                   <div className="stat-label">
-                    A small commercial drone can cost a few hundred euros. The
-                    conventional air-defense interceptors sometimes used against
-                    them can cost orders of magnitude more per engagement.
+                    A drone can cost a few hundred euros. The interceptors used
+                    against them can cost far more per shot.
                   </div>
                   <div className="stat-src">
-                    Widely reported across public defense reporting on
-                    counter-UAS economics. Qualitative — figures vary by system.
+                    Qualitative — figures vary by system.
                   </div>
                 </div>
                 <div className="stat">
@@ -105,9 +96,8 @@ export default function Home() {
                     Airport <span className="accent">incursions</span>
                   </div>
                   <div className="stat-label">
-                    Drone sightings have forced temporary closures at major
-                    airports. London Gatwick was disrupted for roughly 33 hours
-                    in December 2018, affecting ~140,000 passengers.
+                    Drone sightings closed London Gatwick for ~33 hours in
+                    December 2018, affecting ~140,000 passengers.
                   </div>
                   <div className="stat-src">
                     Source:{' '}
@@ -116,7 +106,7 @@ export default function Home() {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      Gatwick Airport drone incident (public record)
+                      Gatwick drone incident (public record)
                     </a>
                   </div>
                 </div>
@@ -125,13 +115,11 @@ export default function Home() {
                     Rising <span className="accent">exposure</span>
                   </div>
                   <div className="stat-label">
-                    Uncrewed systems now feature routinely in reporting on
-                    incidents near airports, borders, and critical
-                    infrastructure. The trend is upward, and cheap.
+                    Incidents near airports, borders, and critical sites keep
+                    rising — and stay cheap.
                   </div>
                   <div className="stat-src">
-                    Qualitative. We deliberately avoid inventing precise counts;
-                    reporting methodologies differ by agency.
+                    Qualitative. We avoid inventing precise counts.
                   </div>
                 </div>
               </div>
@@ -160,31 +148,28 @@ export default function Home() {
             <div className="steps">
               <Reveal className="step">
                 <span className="step-index">LISTEN</span>
-                <h3>Signatures a drone cannot suppress</h3>
+                <h3>Signatures it cannot hide</h3>
                 <p className="body">
-                  Every node passively samples acoustic rotor and motor
-                  harmonics and the RF energy of control and video downlinks in
-                  the 2.4 and 5.8 GHz bands. A quiet drone still moves air and
-                  still talks to its pilot.
+                  Each node passively picks up rotor acoustics and control /
+                  video RF. A quiet drone still moves air and still talks to its
+                  pilot.
                 </p>
               </Reveal>
               <Reveal className="step" delay={100}>
                 <span className="step-index">FUSE</span>
-                <h3>Cross-cueing and friend-or-foe</h3>
+                <h3>Cross-cue and friend-or-foe</h3>
                 <p className="body">
-                  Detections are fused across the mesh. Remote-ID broadcasts
-                  identify cooperative traffic; their <em>absence</em> around a
-                  confirmed track is itself a signal. Nodes cue their neighbors
-                  toward a forming contact.
+                  Contacts combine across the mesh. A cooperative drone
+                  broadcasts Remote ID — its <em>absence</em> around a track is
+                  itself a signal.
                 </p>
               </Reveal>
               <Reveal className="step" delay={200}>
                 <span className="step-index">LOCATE</span>
-                <h3>Tiered triangulation, honest error</h3>
+                <h3>Triangulate, honestly</h3>
                 <p className="body">
-                  With enough bearings, the mesh triangulates a fix and reports
-                  it with an explicit uncertainty ellipse. Fewer nodes means a
-                  coarser fix — and the system says so, rather than pretending.
+                  Enough bearings give a fix with an explicit uncertainty
+                  ellipse. Fewer nodes, coarser fix — and the system says so.
                 </p>
               </Reveal>
             </div>
@@ -227,13 +212,13 @@ export default function Home() {
               </Reveal>
               <Reveal delay={80}>
                 <h2 className="h2" style={{ marginTop: 20 }}>
-                  One Triangle Node. Commodity parts. Emits nothing.
+                  Commodity parts. Emits nothing.
                 </h2>
               </Reveal>
               <Reveal delay={140}>
-                <p className="body lead" style={{ maxWidth: '58ch' }}>
-                  Cheap enough to scatter, cheap enough to lose. Every node is
-                  purely passive: it listens, it never transmits a probe.
+                <p className="body lead" style={{ maxWidth: '52ch' }}>
+                  Cheap enough to scatter, cheap enough to lose. Purely passive —
+                  it listens, never transmits.
                 </p>
               </Reveal>
             </div>
@@ -313,30 +298,29 @@ export default function Home() {
               <Reveal delay={100}>
                 <span className="eyebrow">04 — The mesh</span>
                 <h2 className="h2" style={{ marginTop: 20 }}>
-                  Coverage scales with nodes. Failure degrades gracefully.
+                  Scales with nodes. Fails gracefully.
                 </h2>
                 <ul className="flist">
                   <li>
                     <span className="mark">/ /</span>
                     <span>
-                      <strong>Coverage scales linearly.</strong> Add nodes, add
-                      overlap. Denser meshes tighten every fix.
+                      <strong>Coverage scales linearly.</strong> More nodes, more
+                      overlap, tighter fixes.
                     </span>
                   </li>
                   <li>
                     <span className="mark">/ /</span>
                     <span>
-                      <strong>Nodes cue each other.</strong> A weak contact at
-                      one node becomes a confident track when neighbors
-                      corroborate it.
+                      <strong>Nodes cue each other.</strong> A weak hit becomes a
+                      confident track when neighbors agree.
                     </span>
                   </li>
                   <li>
                     <span className="mark">/ /</span>
                     <span>
                       <strong>No single point of blindness.</strong> Lose a node
-                      to weather, jamming, or attrition and the mesh reroutes —
-                      resolution drops, awareness does not vanish.
+                      and the mesh reroutes — resolution drops, awareness does
+                      not.
                     </span>
                   </li>
                 </ul>
@@ -360,31 +344,27 @@ export default function Home() {
                 </h2>
               </Reveal>
               <Reveal delay={120}>
-                <p className="body lead" style={{ maxWidth: '54ch' }}>
-                  Detection is probabilistic. Ranges are bounded by physics —
-                  acoustics fade, RF attenuates. We treat that as an engineering
-                  reality, not a marketing problem.
+                <p className="body lead" style={{ maxWidth: '52ch' }}>
+                  Detection is probabilistic and bounded by physics. We treat
+                  that as engineering, not marketing.
                 </p>
                 <ul className="flist">
                   <li>
                     <span className="mark">01</span>
                     <span>
-                      <strong>Every track carries confidence.</strong> The
-                      system reports what it knows and how sure it is.
+                      <strong>Every track carries a confidence.</strong>
                     </span>
                   </li>
                   <li>
                     <span className="mark">02</span>
                     <span>
-                      <strong>Uncertainty is a first-class output.</strong> A
-                      wide error ellipse is shown, not hidden.
+                      <strong>Uncertainty is shown, never hidden.</strong>
                     </span>
                   </li>
                   <li>
                     <span className="mark">03</span>
                     <span>
-                      <strong>Physics-limited, and honest about it.</strong> We
-                      state where the sensing ends. Operators plan accordingly.
+                      <strong>We state where the sensing ends.</strong>
                     </span>
                   </li>
                 </ul>
@@ -402,13 +382,13 @@ export default function Home() {
               </Reveal>
               <Reveal delay={80}>
                 <h2 className="h2" style={{ marginTop: 20 }}>
-                  A plugin sensor architecture on one shared schema.
+                  New sensors plug into one shared schema.
                 </h2>
               </Reveal>
               <Reveal delay={140}>
-                <p className="body lead" style={{ maxWidth: '58ch' }}>
-                  New physics, same fabric. Each future layer publishes to the
-                  same fusion schema the acoustic and RF layers already use.
+                <p className="body lead" style={{ maxWidth: '54ch' }}>
+                  Each future layer publishes to the same fusion schema the
+                  acoustic and RF layers already use.
                 </p>
               </Reveal>
             </div>
@@ -418,34 +398,22 @@ export default function Home() {
                 <div className="road">
                   <span className="mono-tag">Layer · Seismic</span>
                   <h3>Ground vibration</h3>
-                  <p>
-                    Geophone-class sensing for low, close passes and ground
-                    activity the air-side layers miss.
-                  </p>
+                  <p>Geophone sensing for low, close passes.</p>
                 </div>
                 <div className="road">
                   <span className="mono-tag">Layer · Magnetometer</span>
                   <h3>Magnetic anomaly</h3>
-                  <p>
-                    Detect motor and battery signatures of nearby platforms as a
-                    corroborating cue.
-                  </p>
+                  <p>Motor and battery signatures as a corroborating cue.</p>
                 </div>
                 <div className="road">
                   <span className="mono-tag">Layer · PIR</span>
                   <h3>Passive infrared</h3>
-                  <p>
-                    Low-power thermal motion triggers to wake and cue the richer
-                    sensors on demand.
-                  </p>
+                  <p>Low-power thermal triggers that wake the richer sensors.</p>
                 </div>
                 <div className="road">
                   <span className="mono-tag">Layer · Camera</span>
                   <h3>Visual cueing</h3>
-                  <p>
-                    Slew-to-cue optical confirmation, driven by a track the mesh
-                    has already localized.
-                  </p>
+                  <p>Slew-to-cue optical confirmation on an existing track.</p>
                 </div>
               </div>
             </Reveal>
@@ -461,22 +429,22 @@ export default function Home() {
                 <h2 className="h2" style={{ marginTop: 20, maxWidth: '18ch' }}>
                   Talk to us about the uncooperative airspace.
                 </h2>
-                <p className="body lead" style={{ maxWidth: '52ch', marginTop: 20 }}>
-                  Built for the NATO DIANA application. For a technical briefing
-                  or evaluation discussion, get in touch.
+                <p className="body lead" style={{ maxWidth: '48ch', marginTop: 20 }}>
+                  Built for the NATO DIANA application. For a briefing or
+                  evaluation, get in touch.
                 </p>
                 <p className="disclaimer">
                   Triangle Mesh is an independent effort. This page uses no NATO
                   or DIANA marks and implies no endorsement, affiliation, or
-                  selection. All diagrams shown are our own technical
-                  illustrations, not live-detection screenshots.
+                  selection. All diagrams are our own technical illustrations,
+                  not live-detection screenshots.
                 </p>
               </Reveal>
               <Reveal delay={120}>
                 <div>
                   <a
                     className="btn"
-                    href="mailto:ogabrielreyes99@gmail.com?subject=Triangle%20Mesh%20—%20Briefing%20request&body=Hi%20Triangle%20Mesh%20team%2C%0A%0AI%27d%20like%20to%20learn%20more%20about%20the%20passive%20drone-detection%20mesh.%0A%0A"
+                    href="mailto:contact@triangletechno.com?subject=Triangle%20Mesh%20—%20Briefing%20request&body=Hi%20Triangle%20Mesh%20team%2C%0A%0AI%27d%20like%20to%20learn%20more%20about%20the%20passive%20drone-detection%20mesh.%0A%0A"
                   >
                     Email the team <span className="arrow">&rarr;</span>
                   </a>
@@ -484,7 +452,7 @@ export default function Home() {
                     className="mono"
                     style={{ marginTop: 20, fontSize: '0.78rem', color: 'var(--fg-faint)' }}
                   >
-                    ogabrielreyes99@gmail.com
+                    contact@triangletechno.com
                   </p>
                 </div>
               </Reveal>

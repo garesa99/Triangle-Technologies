@@ -15,18 +15,24 @@ The site does **not** depend on a runtime internet fetch for its core layout.
 Every photo is rendered through the `Bleed` component, which paints a dark
 solid block (`.img-fallback`) behind the image and swaps to that block on any
 load error (`onError`). If an image is unreachable, the layout is unaffected
-and the section simply shows the dark backdrop. A unified dark duotone /
-desaturation CSS filter is applied to all photos so the set reads cohesively.
+and the section simply shows the dark backdrop. A unified **pure black & white**
+CSS filter (`grayscale(1)`, higher contrast) is applied to every photo, so the
+set reads as stark monochrome silhouettes.
 
 ## Images used (direct Unsplash hotlinks)
 
-| Slot    | Theme                                  | Unsplash photo ID (URL)                                                            | Source   | License          |
-| ------- | -------------------------------------- | --------------------------------------------------------------------------------- | -------- | ---------------- |
-| hero    | Drone silhouette against sky           | https://images.unsplash.com/photo-1473968512647-3e447244af8f                      | Unsplash | Unsplash License |
-| terrain | Field terrain / night-vision mood      | https://images.unsplash.com/photo-1441974231531-c6227db76b6e                      | Unsplash | Unsplash License |
-| tower   | Radio / transmission tower             | https://images.unsplash.com/photo-1518623489648-a173ef7824f3                      | Unsplash | Unsplash License |
-| circuit | Circuit board (node hardware)          | https://images.unsplash.com/photo-1518770660439-4636190af475                      | Unsplash | Unsplash License |
-| dusk    | Field terrain at dusk                  | https://images.unsplash.com/photo-1500534623283-312aade485b7                      | Unsplash | Unsplash License |
+Currently referenced by the page: **hero** and **circuit** only.
+
+| Slot    | Theme                                  | Unsplash photo ID (URL)                                                            | Source   | License          | In use |
+| ------- | -------------------------------------- | --------------------------------------------------------------------------------- | -------- | ---------------- | ------ |
+| hero    | Uncrewed aircraft, silhouette vs sky   | https://images.unsplash.com/photo-1569228593208-6314ad85a2ba                      | Unsplash | Unsplash License | yes    |
+| circuit | Circuit board (node hardware)          | https://images.unsplash.com/photo-1518770660439-4636190af475                      | Unsplash | Unsplash License | yes    |
+
+Hero note: free-license military/fixed-wing UAV photos on Unsplash are almost
+all **Unsplash+ (paid)**. To stay license-clean we use a free, unbranded drone
+shown in **silhouette against sky** — which also reads on-thesis (an *unknown /
+uncooperative* aircraft). If you want a paid Unsplash+ military-UAV frame
+instead, that's a licensing decision to make before launch.
 
 > Photo IDs above were selected to match the stated themes (drone/sky,
 > thermal-mood landscape, radio tower, circuit board, field at dusk). Before

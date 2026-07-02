@@ -67,6 +67,7 @@ CREATE TABLE IF NOT EXISTS tracks (
     node_ids      TEXT,              -- json list contributing nodes
     sensor_types  TEXT,              -- json list contributing sensors
     relay_path    TEXT,              -- json list relayed_via seen
+    bench_test    INTEGER NOT NULL DEFAULT 0,  -- provenance: bench-injected test signal, NOT a live field detection
     state         TEXT NOT NULL DEFAULT 'active'
 );
 
@@ -95,6 +96,11 @@ def init(db_path: str) -> None:
     _conn = sqlite3.connect(db_path, check_same_thread=False)
     _conn.row_factory = sqlite3.Row
     _conn.executescript(SCHEMA)
+    # defensive migration for DBs created before bench_test existed
+    try:
+        _conn.execute("ALTER TABLE tracks ADD COLUMN bench_test INTEGER NOT NULL DEFAULT 0")
+    except sqlite3.OperationalError:
+        pass  # column already present
     _conn.commit()
 
 

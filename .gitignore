@@ -17,3 +17,5 @@ tests/samples/*.wav
 tests/samples/*.iq
 !tests/samples/.gitkeep
 node-agent/weights/*.bin
+node-agent/config.local.yaml
+demo/__pycache__/

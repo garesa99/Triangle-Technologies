@@ -5,9 +5,11 @@
   --hairline: #26262b;
   --text: #d7d7db;
   --text-dim: #7c7c85;
-  --accent: #ff6a00;
-  --online: #3fb950;
-  --stale: #6e7681;
+  /* Fully black & white: the "accent" is pure white. Urgency = brightness + pulse. */
+  --accent: #ffffff;
+  --online: #e6e6ea;
+  --stale: #4a4a52;
+  --bench: #e6e6ea;
   --mono: ui-monospace, "JetBrains Mono", "SFMono-Regular", "Menlo",
     "Consolas", monospace;
 }
@@ -69,7 +71,7 @@ button.accent {
 }
 
 button.accent:hover {
-  background: rgba(255, 106, 0, 0.12);
+  background: rgba(255, 255, 255, 0.12);
 }
 
 input,
@@ -101,13 +103,13 @@ select:focus {
 /* Alert pulse — ONLY for state === "new" (unacknowledged). */
 @keyframes triangle-pulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(255, 106, 0, 0.55);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.55);
   }
   70% {
-    box-shadow: 0 0 0 8px rgba(255, 106, 0, 0);
+    box-shadow: 0 0 0 8px rgba(255, 255, 255, 0);
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(255, 106, 0, 0);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
   }
 }
 

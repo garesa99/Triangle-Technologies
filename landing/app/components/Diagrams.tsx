@@ -1,9 +1,9 @@
-/* Original technical diagrams — monochrome + signal-orange accent.
-   These are OURS. Not product screenshots. */
+/* Original technical diagrams — pure black & white. The "highlight" is bright
+   white against dim grey strokes. These are OURS. Not product screenshots. */
 
 const STROKE = '#3f3f46';
 const STROKE_HI = '#f4f4f5';
-const ACCENT = '#ff6a00';
+const ACCENT = '#f4f4f5';
 const LABEL = '#a1a1aa';
 const FAINT = '#71717a';
 
@@ -24,7 +24,7 @@ export function TriangulationDiagram() {
         cy="150"
         rx="34"
         ry="20"
-        fill="rgba(255,106,0,0.10)"
+        fill="rgba(244,244,245,0.14)"
         stroke={ACCENT}
         strokeWidth="1"
         strokeDasharray="3 3"
@@ -80,7 +80,7 @@ export function SensorStackDiagram() {
             y={l.y}
             width="300"
             height="38"
-            fill={i === 2 ? 'rgba(255,106,0,0.08)' : '#101012'}
+            fill={i === 2 ? 'rgba(244,244,245,0.10)' : '#101012'}
             stroke={i === 2 ? ACCENT : STROKE}
             strokeWidth="1"
           />
@@ -166,7 +166,7 @@ export function MeshDiagram() {
       })}
 
       {/* brain */}
-      <circle cx={brain.x} cy={brain.y} r="16" fill="rgba(255,106,0,0.08)" stroke={ACCENT} strokeWidth="1.2" />
+      <circle cx={brain.x} cy={brain.y} r="16" fill="rgba(244,244,245,0.10)" stroke={ACCENT} strokeWidth="1.2" />
       <circle cx={brain.x} cy={brain.y} r="4" fill={ACCENT} />
       <text x={brain.x} y={brain.y + 34} style={{ ...mono, fontSize: 9 }} fill={ACCENT} textAnchor="middle">BRAIN</text>
       <text x="52" y="24" style={{ ...mono, fontSize: 9 }} fill={FAINT}>MESH · P2P</text>

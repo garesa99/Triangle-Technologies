@@ -46,7 +46,7 @@ function rasterStyle(tileUrl: string): StyleSpecification {
         id: "basemap",
         type: "raster",
         source: "basemap",
-        // Dim + desaturate real tiles so the orange accent stays dominant.
+        // Dim + desaturate real tiles so the white accent stays dominant.
         paint: { "raster-brightness-max": 0.55, "raster-saturation": -0.6 },
       },
     ],

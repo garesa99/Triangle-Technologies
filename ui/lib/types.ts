@@ -89,6 +89,7 @@ export interface Track {
   signature_class: string;
   confidence: number;
   cooperative: boolean;
+  bench_test?: boolean; // provenance: bench-injected test signal, NOT a live field detection
   threat_score: number;
   threat_breakdown: ThreatBreakdown;
   node_ids: string[];

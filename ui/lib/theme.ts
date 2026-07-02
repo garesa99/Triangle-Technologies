@@ -1,5 +1,6 @@
-// Single source of truth for the dark operational palette.
-// ONE signal-orange accent, reserved for ACTIVE / UNACKNOWLEDGED tracks + alerts.
+// Single source of truth for the operational palette.
+// FULLY BLACK & WHITE: no hue anywhere. Threat/urgency is conveyed by BRIGHTNESS, PULSE, and
+// WEIGHT; localization tiers are distinguished by SHAPE + LINE STYLE + brightness, never colour.
 
 export const COLOR = {
   ground: "#0A0A0B",
@@ -8,20 +9,21 @@ export const COLOR = {
   hairline: "#26262B",
   text: "#D7D7DB",
   textDim: "#7C7C85",
-  // THE accent — do not reuse for anything non-urgent.
-  accent: "#FF6A00",
-  // Node health.
-  online: "#3FB950",
-  stale: "#6E7681",
-  // Localization tiers (kept distinct from the orange accent).
-  bearing: "#E3B341", // ray
-  coarse: "#58A6FF", // uncertainty ellipse
-  precise: "#2DD4BF", // precise fix
+  // THE accent — pure white, reserved for ACTIVE / UNACKNOWLEDGED tracks + alerts.
+  accent: "#FFFFFF",
+  // Node health — brightness, not colour.
+  online: "#E6E6EA",
+  stale: "#4A4A52",
+  // Localization tiers — greys by confidence (brighter = more precise). Shape + dash in MapView
+  // carry the real distinction: ray (line) / coarse (dashed ellipse) / precise (solid + point).
+  bearing: "#8A8A92", // ray
+  coarse: "#B4B4BC", // uncertainty ellipse (dashed)
+  precise: "#F4F4F5", // precise fix (solid, brightest)
   // Mesh links.
   mesh: "#2B2B33",
-  relay: "#FF6A00",
+  relay: "#FFFFFF",
   // Coverage.
-  coverage: "#1F6FEB",
+  coverage: "#3A3A42",
   // Geofence.
-  geofence: "#C25A2E",
+  geofence: "#7C7C85",
 } as const;

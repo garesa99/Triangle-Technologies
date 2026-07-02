@@ -47,7 +47,7 @@ export default function AlertFeed(props: Props) {
             className={isNew ? "pulse hairline" : "hairline"}
             style={{
               padding: "8px 12px",
-              background: isNew ? "rgba(255,106,0,0.05)" : "transparent",
+              background: isNew ? "rgba(255,255,255,0.05)" : "transparent",
               opacity: isClosed ? 0.5 : 1,
             }}
           >

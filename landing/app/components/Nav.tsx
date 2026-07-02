@@ -7,10 +7,10 @@ export default function Nav() {
             <polygon
               points="9,2 16,15 2,15"
               fill="none"
-              stroke="#ff6a00"
+              stroke="#f4f4f5"
               strokeWidth="1.3"
             />
-            <circle cx="9" cy="2" r="1.4" fill="#ff6a00" />
+            <circle cx="9" cy="2" r="1.4" fill="#f4f4f5" />
             <circle cx="16" cy="15" r="1.4" fill="#f4f4f5" />
             <circle cx="2" cy="15" r="1.4" fill="#f4f4f5" />
           </svg>

@@ -4,7 +4,9 @@
   --fg: #f4f4f5;
   --fg-dim: #a1a1aa;
   --fg-faint: #71717a;
-  --accent: #ff6a00;
+  /* Monochrome: the single "accent" is pure white — hierarchy comes from weight,
+     size, and hairlines, not colour. */
+  --accent: #ffffff;
   --hairline: rgba(255, 255, 255, 0.1);
   --hairline-strong: rgba(255, 255, 255, 0.2);
   --max: 1200px;
@@ -244,9 +246,9 @@ section {
   height: 100%;
   object-fit: cover;
   display: block;
-  /* Unified dark duotone/desaturation so the photo set looks cohesive */
-  filter: grayscale(0.7) brightness(0.55) contrast(1.15) sepia(0.15)
-    hue-rotate(-8deg);
+  /* Pure black & white: full grayscale, higher contrast so photos read as
+     stark monochrome silhouettes, cohesive across the set */
+  filter: grayscale(1) brightness(0.5) contrast(1.25);
 }
 
 .bleed .overlay {
@@ -280,7 +282,7 @@ section {
   background:
     radial-gradient(
       120% 80% at 50% 0%,
-      rgba(255, 106, 0, 0.06),
+      rgba(255, 255, 255, 0.04),
       transparent 60%
     ),
     #08080a;

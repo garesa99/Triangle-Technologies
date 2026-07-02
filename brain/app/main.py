@@ -145,6 +145,7 @@ def tracks() -> list[dict[str, Any]]:
         for k in ("node_ids", "sensor_types", "relay_path", "threat_breakdown"):
             t[k] = db.loads(t[k])
         t["cooperative"] = bool(t["cooperative"])
+        t["bench_test"] = bool(t.get("bench_test"))
         out.append(t)
     return out
 

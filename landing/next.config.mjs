@@ -1,10 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
+  // Hosted natively on Vercel (standard Next.js app): the landing page is statically
+  // generated and the console route is client-only. No `output: 'export'` so Vercel serves
+  // it directly (that setting writes to out/ and can 404 on Vercel).
   images: {
     unoptimized: true,
   },
-  trailingSlash: true,
   reactStrictMode: true,
 };
 

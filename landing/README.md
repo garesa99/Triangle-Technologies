@@ -35,16 +35,26 @@ serve it. Fonts (Inter, JetBrains Mono) are self-hosted via `next/font`.
 
 ## Deploy to Vercel
 
-The static `out/` directory deploys cleanly on Vercel.
+This is a **monorepo** — the Next.js app is in `landing/`, and the repo root has
+no `package.json`. So the one setting that matters is **Root Directory**.
+
+> If you see `Error: No Next.js version detected` on Vercel, it means the Root
+> Directory is pointing at the repo root (no `next` there). Set it to `landing`.
 
 **Option A — Git integration (recommended):**
 
-1. Push this `landing/` directory as its own repo (or set the Vercel project's
-   **Root Directory** to `landing`).
-2. Import the repo in the Vercel dashboard.
-3. Framework preset: **Next.js** (Vercel auto-detects `output: 'export'` and
-   serves the static build). Build command `npm run build`, output `out`.
-4. Deploy.
+1. Import the repo in the Vercel dashboard.
+2. **Set Root Directory to `landing`** (Project → Settings → Build & Deployment →
+   Root Directory, or during import). This is the fix for the monorepo.
+3. Framework preset: **Next.js** (auto-detected once Root Directory is `landing`).
+   Vercel sees `output: 'export'` and serves the static build from `out/`. Leave
+   Build Command / Output Directory on their Next.js defaults.
+4. Deploy. Set `NEXT_PUBLIC_DEMO_URL` in Environment Variables if you have a
+   hosted console.
+
+Do **not** add a custom `vercel.json` at the repo root with `framework: null` —
+the dashboard's Next.js preset overrides it and detection still fails. Pointing
+Root Directory at `landing` is the correct, single fix.
 
 **Option B — Vercel CLI:**
 

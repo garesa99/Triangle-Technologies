@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useMeshState } from "../lib/useMeshState";
+import { useDemoMesh } from "../lib/demo/engine";
 import { loadConfig, saveConfig } from "../lib/config";
 import { api } from "../lib/api";
 import { COLOR } from "../lib/theme";
@@ -17,8 +18,24 @@ export default function Console() {
   const [cfg, setCfg] = useState(() => loadConfig());
   const { brainUrl, token } = cfg;
 
-  const { nodes, tracks, alerts, geofences, status, refreshGeofences } =
-    useMeshState(brainUrl, token);
+  // DEMO mode: fully self-contained, runs in the browser with no backend (Vercel-only).
+  // Enabled by NEXT_PUBLIC_DEMO_MODE=1 (deployed demo) or ?demo in the URL (local check).
+  const demoMode = useMemo(() => {
+    if (process.env.NEXT_PUBLIC_DEMO_MODE === "1") return true;
+    if (typeof window !== "undefined")
+      return new URLSearchParams(window.location.search).has("demo");
+    return false;
+  }, []);
+
+  const live = useMeshState(brainUrl, token, !demoMode); // idle in demo mode
+  const demo = useDemoMesh(demoMode); // idle unless demo mode
+
+  const nodes = demoMode ? demo.nodes : live.nodes;
+  const tracks = demoMode ? demo.tracks : live.tracks;
+  const alerts = demoMode ? demo.alerts : live.alerts;
+  const geofences = demoMode ? demo.geofences : live.geofences;
+  const status = demoMode ? ("LIVE" as const) : live.status;
+  const refreshGeofences = live.refreshGeofences;
 
   const [selection, setSelection] = useState<Selection>(null);
   const [showCoverage, setShowCoverage] = useState(false);
@@ -61,12 +78,18 @@ export default function Console() {
   );
 
   const onAck = useCallback(
-    (id: string) => withBusy(id, () => api.ackAlert(brainUrl, token, id)),
-    [brainUrl, token, withBusy],
+    (id: string) => {
+      if (demoMode) return demo.ackAlert(id);
+      return withBusy(id, () => api.ackAlert(brainUrl, token, id));
+    },
+    [demoMode, demo, brainUrl, token, withBusy],
   );
   const onCloseAlert = useCallback(
-    (id: string) => withBusy(id, () => api.closeAlert(brainUrl, token, id)),
-    [brainUrl, token, withBusy],
+    (id: string) => {
+      if (demoMode) return demo.closeAlert(id);
+      return withBusy(id, () => api.closeAlert(brainUrl, token, id));
+    },
+    [demoMode, demo, brainUrl, token, withBusy],
   );
 
   // --- geofence drawing ---
@@ -85,6 +108,12 @@ export default function Console() {
   }, []);
 
   const finishDraw = useCallback(async () => {
+    if (demoMode) {
+      flash("Geofences are read-only in the demo.");
+      setDrawing(false);
+      setDraft([]);
+      return;
+    }
     if (draft.length < 3) {
       flash("A zone needs at least 3 vertices.");
       return;
@@ -104,7 +133,7 @@ export default function Console() {
       setDrawing(false);
       setDraft([]);
     }
-  }, [draft, brainUrl, token, refreshGeofences, flash]);
+  }, [demoMode, draft, brainUrl, token, refreshGeofences, flash]);
 
   const onDeleteGeofence = useCallback(
     async (id: string) => {
@@ -202,8 +231,8 @@ export default function Console() {
                 textTransform: "uppercase",
               }}
             >
-              ⚠ Bench test signal — synthetic audio through the real pipeline, not a
-              live detection
+              ⚠ Simulated scenario — synthetic audio through the real detection
+              pipeline. Not live sensor data.
             </div>
           )}
 

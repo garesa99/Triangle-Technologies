@@ -115,3 +115,18 @@ lib/            types (data contract), api (REST), useMeshState (WS + reconnect)
 
 Timestamps are rendered in **UTC** (the brain emits ISO-8601 UTC) to avoid
 operator-locale ambiguity.
+
+## Demo mode (self-contained, Vercel-only, no backend)
+
+Set **`NEXT_PUBLIC_DEMO_MODE=1`** (or append `?demo` to the URL) and the console runs entirely in
+the browser with **no brain, no websocket, no database**. It synthesizes drone audio and runs it
+through the *real* ported detector (`lib/demo/detector.ts`) + fusion (`lib/demo/fusion.ts`,
+`lib/demo/engine.ts`) to produce a moving COARSE track + alert, labeled **"Simulated scenario."**
+Acknowledge/Close work locally. This is what lets the demo deploy on Vercel with zero infra — see
+`deploy/VERCEL_DEMO.md`.
+
+```bash
+NEXT_PUBLIC_DEMO_MODE=1 npm run dev     # or: open http://localhost:3000/?demo
+```
+
+Leave it unset for the real operator picture (connects to a brain via `NEXT_PUBLIC_BRAIN_URL`).

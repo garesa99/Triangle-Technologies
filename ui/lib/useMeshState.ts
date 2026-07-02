@@ -28,7 +28,7 @@ function mergeBy<T>(existing: T[], incoming: T[], key: (t: T) => string): T[] {
   return Array.from(map.values());
 }
 
-export function useMeshState(brainUrl: string, token: string): MeshState {
+export function useMeshState(brainUrl: string, token: string, enabled = true): MeshState {
   const [nodes, setNodes] = useState<MeshNode[]>([]);
   const [tracks, setTracks] = useState<Track[]>([]);
   const [alerts, setAlerts] = useState<Alert[]>([]);
@@ -82,6 +82,7 @@ export function useMeshState(brainUrl: string, token: string): MeshState {
 
   useEffect(() => {
     closedRef.current = false;
+    if (!enabled) return; // demo mode: no brain connection
 
     function scheduleReconnect() {
       if (closedRef.current) return;
@@ -140,7 +141,7 @@ export function useMeshState(brainUrl: string, token: string): MeshState {
         wsRef.current = null;
       }
     };
-  }, [brainUrl, token, handleMessage]);
+  }, [brainUrl, token, handleMessage, enabled]);
 
   return { nodes, tracks, alerts, geofences, status, refreshGeofences };
 }

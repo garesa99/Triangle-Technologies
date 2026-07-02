@@ -235,7 +235,7 @@ export default function Home() {
                   <tbody>
                     <tr>
                       <td>Compute</td>
-                      <td>Raspberry Pi 4 / 5 (ARM64, Linux)</td>
+                      <td>Quad-core ARM64 single-board computer (Linux)</td>
                     </tr>
                     <tr>
                       <td>Acoustic</td>

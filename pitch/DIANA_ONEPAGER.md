@@ -47,7 +47,7 @@ Passive, distributed, attritable sensing is the affordable counter to an afforda
 ## Unit economics (one node, indicative BOM)
 | item | ~€ |
 |---|---|
-| Raspberry Pi 4/5 | 55–80 |
+| Quad-core ARM64 single-board computer | 55–80 |
 | USB / I2S microphone (or small array) | 10–30 |
 | SDR for 2.4/5.8 GHz (RTL-SDR+upconverter / HackRF) | 30–120 |
 | ESP32 OpenDroneID receiver | 8 |

@@ -4,6 +4,22 @@ Purpose: measure what the mesh actually does against ground truth, and write dow
 numbers. Ideally fly a drone that **broadcasts Remote ID** so you get free ground-truth position
 to compare the fused fix against.
 
+## Current status — validation is gated on permissions (this is why no field numbers yet)
+The software and this procedure are **ready to run**. What is not yet in hand is the **regulatory
+authorization to fly**, which is the reason no real-world detection ranges or fix-error numbers are
+published anywhere in this repo. We will not fabricate them. Specifically, running this test
+requires:
+- **UAS flight authorization** at a permitted site (airspace clearance, VLOS, local UAS rules).
+- **An exemption / coordination to fly a non-broadcasting (uncooperative) test drone** — Remote ID
+  is legally mandated, so deliberately flying a drone *without* it, to validate the uncooperative
+  case, needs prior authorization. (A Remote-ID-broadcasting drone can still be used as ground
+  truth for the localization test.)
+- **A cleared test area** near representative infrastructure, ideally with the relevant operator's
+  permission, plus RF-environment coordination.
+
+The moment those permissions are granted, this is an afternoon of work and the results drop
+straight into `CAPABILITIES.md` and `pitch/DIANA_ONEPAGER.md`.
+
 ## You need
 - 2–3 Triangle nodes that PASSED their `RECON.md` steps, placed 50–200 m apart around an open
   area, each with a known surveyed position (enter it in `config.yaml`).

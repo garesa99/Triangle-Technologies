@@ -65,4 +65,7 @@ never silently inflates or deflates a score.
   known gap, not a solved problem.
 - The mesh needs multicast **or** broadcast on the LAN for zero-config discovery; locked-down APs
   may require a wired switch / dedicated AP.
-- Field range/accuracy numbers are **not** claimed here — run `FIELD_TEST.md` with a real drone.
+- Field range/accuracy numbers are **not** claimed here — the software and procedure
+  (`FIELD_TEST.md`) are ready, but live-drone validation is **gated on flight authorizations and a
+  permitted test site** (including an exemption to fly a non-broadcasting *uncooperative* drone for
+  ground truth). We will not publish field numbers we have not measured.

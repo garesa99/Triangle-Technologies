@@ -34,7 +34,10 @@ one confident fix. Triangle.
 - **Public site** — austere DIANA-ready landing page (static, noindex, no NATO marks).
 
 ## What is ROADMAP (honestly not done)
-- Real-world range/accuracy numbers from a live drone fly-by (procedure shipped: `FIELD_TEST.md`).
+- Real-world range/accuracy numbers from a live drone fly-by. The software and procedure are ready
+  (`FIELD_TEST.md`); this step is **gated on obtaining flight authorizations and a permitted test
+  site** — including an exemption to fly a non-broadcasting *uncooperative* drone for ground truth
+  (Remote ID is legally mandated). With permissions in hand it is an afternoon of work.
 - Trained acoustic model on an open dataset (training script shipped; heuristic is today's default).
 - PIR / seismic / magnetometer detectors (plugin stubs prove the path; `detect()` is TODO).
 - Hardening for contested RF, wind robustness, and larger meshes.

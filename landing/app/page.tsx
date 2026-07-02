@@ -17,9 +17,9 @@ const IMG = {
     'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1600&q=70',
 };
 
-/* Live operator console. Set NEXT_PUBLIC_DEMO_URL to the deployed (passcode-protected,
-   noindex) console for production; defaults to a local instance for review. */
-const DEMO_URL = process.env.NEXT_PUBLIC_DEMO_URL || 'http://localhost:3000';
+/* Live operator console — an internal route of this same site (/console). Override with
+   NEXT_PUBLIC_DEMO_URL only if you host the console elsewhere. */
+const DEMO_URL = process.env.NEXT_PUBLIC_DEMO_URL || '/console';
 
 export default function Home() {
   return (
@@ -50,7 +50,7 @@ export default function Home() {
                 <a href="#contact" className="btn">
                   Request a briefing <span className="arrow">&rarr;</span>
                 </a>
-                <a href={DEMO_URL} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
+                <a href={DEMO_URL} className="btn btn-ghost">
                   Open the live console <span className="arrow">&rarr;</span>
                 </a>
               </div>
@@ -460,8 +460,6 @@ export default function Home() {
                   <p style={{ marginTop: 24 }}>
                     <a
                       href={DEMO_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
                       className="mono"
                       style={{ fontSize: '0.78rem', color: 'var(--fg)', borderBottom: '1px solid var(--hairline-strong)', paddingBottom: 2 }}
                     >

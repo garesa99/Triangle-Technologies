@@ -83,17 +83,17 @@ The three technical diagrams are original inline SVGs (ours), labeled
 "Illustrative". There are no fabricated live-detection screenshots anywhere on
 the page.
 
-## Live demo link
+## Operator console — same site, `/console`
 
-The nav, hero, and contact section link to the live operator console via
-`NEXT_PUBLIC_DEMO_URL` (defaults to `http://localhost:3000` for local review).
-For production set it to the deployed console URL, which should be
-**passcode-protected and noindex** (guardrail):
+This app is BOTH the marketing site (`/`) and the operator console (`/console`). The nav, hero,
+and contact links point at the internal `/console` route. On the console, a "← Back to site" link
+returns to `/`. The console's styling is fully scoped under `.console-shell` so it never leaks into
+the marketing pages.
 
-```bash
-NEXT_PUBLIC_DEMO_URL=https://console.triangletechno.com npm run build
-```
-(or set it in the Vercel project's Environment Variables.)
+Set **`NEXT_PUBLIC_DEMO_MODE=1`** so `/console` runs the self-contained browser demo (no backend).
+Full deploy steps: [`../deploy/VERCEL_DEMO.md`](../deploy/VERCEL_DEMO.md). Console internals live in
+`components/` and `lib/` (incl. `lib/demo/`). Override the link with `NEXT_PUBLIC_DEMO_URL` only if
+you host the console elsewhere.
 
 ## Design system
 

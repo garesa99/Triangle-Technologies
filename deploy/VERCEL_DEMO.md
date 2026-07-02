@@ -1,55 +1,48 @@
-# Deploy everything on Vercel (no backend, no infra)
+# Deploy the whole site on Vercel — ONE project
 
-For a presentation, the whole thing runs on **Vercel only** — two static/client Next.js projects,
-no server, no database, no Hetzner. The console runs a **self-contained DEMO mode**: synthetic
-audio through the *real* ported detector + fusion, entirely in the browser, clearly labeled
-**"Simulated scenario."**
+The marketing site **and** the operator console are now a **single Next.js app** in `landing/`.
+The console lives at the internal route **`/console`** and the demo runs **entirely in the
+browser** (synthetic audio → the real ported detector + fusion → a moving track/alert), so there
+is **no backend, no database, no websocket** — just one static site on Vercel.
 
-> This is the demo shop-window. The real field system still runs offline/local against the actual
-> brain (see `deploy/README.md`); that part is not — and should not be — on Vercel.
+- Landing page → `/`
+- Operator console (demo) → `/console`   (linked from the nav, hero, and contact section)
+- "← Back to site" link on the console returns to `/`.
 
-## Two Vercel projects from the same repo
-Both just need their **Root Directory** set (the repo root has no app — that's the only gotcha).
+> The real field system still runs offline/local against the actual brain (see `deploy/README.md`
+> and the standalone `ui/` app). Only this demo site goes on the public internet.
 
-### Project 1 — Landing page
-1. Import the repo in Vercel → **New Project**.
-2. **Root Directory = `landing`**.
-3. Add Environment Variable:
-   - `NEXT_PUBLIC_DEMO_URL` = the console URL from Project 2 (fill in after you create it, then redeploy).
-4. Deploy. (It's `noindex` until you remove the meta tag.)
+## Deploy (one project)
+1. Vercel → **New Project** → import the repo.
+2. **Root Directory = `landing`**  ← the only setting that matters (the repo root has no app).
+3. **Environment Variables** → add:
+   - `NEXT_PUBLIC_DEMO_MODE` = `1`   ← makes `/console` run the self-contained browser demo.
+4. Deploy. Open the site → click **Live demo** (or **Open the live console**) → the operator
+   picture appears with a moving track + alert under a **"Simulated scenario"** banner.
 
-### Project 2 — Operator console (DEMO)
-1. Import the **same repo** again → **New Project** (a second project).
-2. **Root Directory = `ui`**.
-3. Add Environment Variable:
-   - `NEXT_PUBLIC_DEMO_MODE` = `1`   ← this turns on the self-contained browser demo (no backend).
-4. Deploy. Open it — you'll see the operator picture with a **moving track + alert** under a
-   **"Simulated scenario"** banner. Acknowledge/Close work locally.
-5. Copy this project's URL back into Project 1's `NEXT_PUBLIC_DEMO_URL` and redeploy the landing.
+That's it. One project, one deploy, fully navigable. No `NEXT_PUBLIC_DEMO_URL` needed (the link is
+internal); set it only if you ever host the console on a different URL.
 
-That's it. The landing page's nav "Live demo" / hero "Open the live console" now open the hosted,
-self-contained demo. Nothing else to run.
+## What the demo actually does (say this honestly)
+- Per node it **synthesizes drone audio** at a level set by the target's distance and runs it
+  through the **same detector algorithm** that runs on hardware (harmonic-comb + spectral flatness
+  + broadband gating, ported to TS in `landing/lib/demo/detector.ts` — verified to match the
+  Python). The confidences are produced by the real algorithm, not typed in.
+- It fuses them with the **same fusion math** (`landing/lib/demo/fusion.ts`): signal-weighted
+  centroid → COARSE uncertainty ellipse, decomposable threat score, friend-or-foe.
+- Every track is flagged `bench_test` → the **"Simulated scenario — synthetic audio through the
+  real detection pipeline. Not live sensor data."** banner. No GNSS-PPS in a browser → it stays
+  COARSE, exactly like the real bearing-less mesh. Acknowledge/Close work locally.
 
-## What the demo actually does (so you can speak to it honestly)
-- Per node, it **synthesizes drone audio** whose level is set by the target's distance, and runs
-  it through the **same detector algorithm** that runs on hardware (harmonic-comb + spectral
-  flatness + broadband gating — ported to TypeScript in `ui/lib/demo/detector.ts`). The
-  confidences are produced by the real algorithm, not typed in.
-- It fuses the detections with the **same fusion math** (signal-weighted centroid → COARSE
-  uncertainty ellipse, decomposable threat score, friend-or-foe) in `ui/lib/demo/fusion.ts`.
-- Every track is flagged `bench_test`, so the console shows the **"Simulated scenario — synthetic
-  audio through the real detection pipeline. Not live sensor data."** banner. It never claims to be
-  a live field detection. No GNSS-PPS in the browser → it stays COARSE, exactly like the real
-  bearing-less mesh.
-
-## Local check before you deploy
+## Local check
 ```bash
-cd ui && npm install
-NEXT_PUBLIC_DEMO_MODE=1 npm run dev      # http://localhost:3000  (or add ?demo to any console URL)
+cd landing && npm install
+NEXT_PUBLIC_DEMO_MODE=1 npm run dev     # http://localhost:3000  →  landing;  /console → demo
+# (or leave the env unset and open /console?demo)
 ```
 
-## When you have real hardware
-Turn demo mode OFF (unset `NEXT_PUBLIC_DEMO_MODE`) and point the console at a real brain via
-`NEXT_PUBLIC_BRAIN_URL` / `NEXT_PUBLIC_BRAIN_TOKEN`. The same console is both the demo and the real
-operator picture — only the data source changes. (A hosted *live* brain needs a real server, e.g.
-the optional `deploy/hetzner/` path — not Vercel.)
+## Running the console against a REAL brain (field / live)
+Build/run without `NEXT_PUBLIC_DEMO_MODE` and set `NEXT_PUBLIC_BRAIN_URL` /
+`NEXT_PUBLIC_BRAIN_TOKEN`; `/console` then connects to a live brain. A hosted *live* brain needs a
+real server (not Vercel) — see the optional `deploy/hetzner/` path, or run the offline stack from
+`deploy/README.md`.
